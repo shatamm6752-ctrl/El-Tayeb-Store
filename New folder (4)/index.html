@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>El Tayeb Store</title>
+  <meta name="description" content="El Tayeb Store — متجر الطيب" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <!-- Ambient background (decorative, non-interactive) -->
+  <div class="bg-decor" aria-hidden="true">
+    <span class="blob blob--1"></span>
+    <span class="blob blob--2"></span>
+    <span class="blob blob--3"></span>
+    <span class="blob blob--4"></span>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header__inner">
+      <!-- Hamburger (mobile) -->
+      <button class="hamburger" id="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="primary-nav">
+        <span></span><span></span><span></span>
+      </button>
+
+      <a class="brand" href="#top">
+        <span class="brand__name" data-i18n="brandName">El Tayeb Store</span>
+        <span class="brand__ar" data-i18n="brandAr">متجر الطيب</span>
+      </a>
+
+      <!-- Nav -->
+      <nav class="nav" id="primary-nav" aria-label="Primary">
+        <a class="nav__link" href="#top" data-i18n="navHome">Home</a>
+        <a class="nav__link" href="#products" data-i18n="navProducts">Products</a>
+        <a class="nav__link" href="#contact" data-i18n="navContact">Contact</a>
+      </nav>
+
+      <div class="header__actions">
+        <!-- Language toggle -->
+        <div class="lang-toggle" role="group" aria-label="Language">
+          <button class="lang-toggle__btn is-active" type="button" data-lang="en">EN</button>
+          <button class="lang-toggle__btn" type="button" data-lang="ar">ع</button>
+        </div>
+
+        <button class="cart-button" type="button" data-open-cart data-i18n-aria="openCart" aria-label="Open cart">
+          <span class="cart-button__label" data-i18n="cart">Cart</span>
+          <span class="cart-button__count" data-cart-count>0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <h1 class="hero__title" data-i18n="heroTitle">El Tayeb Store</h1>
+        <p class="hero__subtitle" data-i18n="heroSubtitle">متجر الطيب</p>
+      </div>
+    </section>
+
+    <!-- Products -->
+    <section class="products" id="products">
+      <div class="container">
+        <div class="product-grid" id="product-grid"><!-- Cards rendered by js/app.js --></div>
+        <p class="empty-state" id="empty-state" data-i18n="emptyProducts" hidden>No products available yet.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" id="contact">
+    <div class="container">
+      <p class="footer__brand" data-i18n="brandName">El Tayeb Store</p>
+      <p class="footer__ar" data-i18n="brandAr">متجر الطيب</p>
+      <p class="footer__text" data-i18n="footerNote">Order easily via WhatsApp.</p>
+    </div>
+  </footer>
+
+  <!-- Product detail modal -->
+  <div class="pmodal" id="product-modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="pmodal__panel">
+      <button class="pmodal__close" id="product-modal-close" type="button" data-i18n-aria="close" aria-label="Close">&times;</button>
+      <div class="pmodal__body" id="product-modal-body"><!-- Populated by js/app.js --></div>
+    </div>
+  </div>
+
+  <!-- Cart drawer + overlay -->
+  <div class="overlay" id="cart-overlay"></div>
+  <aside class="cart" id="cart-drawer" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="cart__header">
+      <h2 class="cart__title" data-i18n="yourCart">Your Cart</h2>
+      <button class="cart__close" id="cart-close" type="button" data-i18n-aria="closeCart" aria-label="Close cart">&times;</button>
+    </div>
+
+    <ul class="cart__items" id="cart-items"><!-- Cart items rendered by js/app.js --></ul>
+    <p class="cart__empty" id="cart-empty" data-i18n="cartEmpty">Your cart is empty.</p>
+
+    <div class="cart__footer" id="cart-footer" hidden>
+      <!-- Payment method -->
+      <div class="checkout">
+        <h3 class="checkout__title" data-i18n="paymentMethod">Payment Method</h3>
+
+        <label class="pay-option">
+          <input type="radio" name="payment" value="wallet" />
+          <span class="pay-option__box">
+            <span class="pay-option__title" data-i18n="payWallet">Prepayment / E-Wallet</span>
+            <span class="pay-option__desc" data-i18n="payWalletDesc">Transfer to one of the wallets below</span>
+          </span>
+        </label>
+
+        <!-- Wallet details (shown when prepayment is selected) -->
+        <div class="wallet" id="wallet-details" hidden>
+          <div class="wallet__row">
+            <span class="wallet__label" data-i18n="walletVodafone">Vodafone Cash</span>
+            <span class="wallet__num" id="wallet-vodafone">01066526729</span>
+          </div>
+          <div class="wallet__row">
+            <span class="wallet__label" data-i18n="walletInstapay">InstaPay</span>
+            <span class="wallet__num" id="wallet-instapay">01066526729</span>
+          </div>
+          <p class="wallet__note" data-i18n="walletNote">Send the total, then confirm your order.</p>
+        </div>
+
+        <label class="pay-option">
+          <input type="radio" name="payment" value="cod" />
+          <span class="pay-option__box">
+            <span class="pay-option__title" data-i18n="payCod">Cash on Delivery</span>
+          </span>
+        </label>
+        <p class="field__error" id="payment-error" hidden></p>
+      </div>
+
+      <!-- Customer details -->
+      <div class="checkout">
+        <h3 class="checkout__title" data-i18n="checkoutTitle">Checkout</h3>
+
+        <div class="field">
+          <label class="field__label" for="cust-name" data-i18n="fullName">Full Name</label>
+          <input class="field__input" id="cust-name" type="text" autocomplete="name" data-i18n-ph="namePlaceholder" placeholder="Enter your full name" />
+          <p class="field__error" id="name-error" hidden></p>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="cust-phone" data-i18n="phone">Phone Number</label>
+          <input class="field__input" id="cust-phone" type="tel" inputmode="tel" autocomplete="tel" data-i18n-ph="phonePlaceholder" placeholder="Enter your phone number" />
+          <p class="field__error" id="phone-error" hidden></p>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="cust-address" data-i18n="address">Detailed Delivery Address</label>
+          <textarea class="field__input field__input--area" id="cust-address" rows="3" data-i18n-ph="addressPlaceholder" placeholder="Street, building, floor, landmarks…"></textarea>
+          <p class="field__error" id="address-error" hidden></p>
+        </div>
+      </div>
+
+      <div class="cart__total-row">
+        <span data-i18n="total">Total</span>
+        <span class="cart__total" id="cart-total">0 EGP</span>
+      </div>
+      <button class="btn btn--whatsapp btn--block" id="checkout-btn" type="button" data-i18n="confirmOrder">Confirm Order</button>
+    </div>
+  </aside>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
